@@ -1,0 +1,12 @@
+{
+    "name": "vapurlounge",
+    "description": "Vapur Lounge",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+    	"connect": "~2.7.9",
+        "express": "~3.2.4",
+        "nodemailer": "~0.4.3"
+    },
+    "engine" : "node ~0.10.6"
+}
