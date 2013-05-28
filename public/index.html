@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Analog Zen</title>
+
+  <link rel="stylesheet" href="css/all.min.css">
+  
+  <!-- responsive features -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+<body>
+  <script type="text/x-handlebars">
+    <div class="container">
+      {{partial siteNav}}
+
+      {{outlet}}
+    </div>
+  </script>
+
+
+  <script type="text/x-handlebars" id="_siteNav">
+    <div id="siteNav" class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#/">Analog Zen</a>
+        <ul class="nav">
+          <li>{{#linkTo harlan}}<span class="icon">o</span>Harlan{{/linkTo}}</li>
+          <li>{{#linkTo programming}}<span class="icon">o</span>Programming{{/linkTo}}</li>
+          <li>{{#linkTo lean}}<span class="icon">o</span>Lean Startup{{/linkTo}}</li>
+        </ul>
+        <p class="navbar-text pull-right"><i class="icon-envelope"></i> <a href="mailto:harlan@analogzen.com">harlan@analogzen.com</a></p>
+      </div>
+    </div>
+
+  </script>
+
+
+  <script type="text/x-handlebars" id="_splash">
+    <div class="hero-unit">
+      <div class="row-fluid">
+        <div class="span2">
+          {{#linkTo harlan}}
+          <img src="https://sphotos-a.xx.fbcdn.net/hphotos-prn1/46990_10151401264654422_1090876347_n.jpg" alt="Harlan"/>
+          {{/linkTo}}
+        </div>
+        <div class="span10">
+          <h1>Look, a Programmer!</h1>
+
+          <p>Some more details, check me out!</p>
+
+          <a class="btn btn-primary btn-large" href="#/programming">Show Me</a>
+        </div>
+      </div>
+    </div>
+  </script>
+
+
+  <script type="text/x-handlebars" id="index">
+    {{partial splash}}
+  </script>
+
+  <script type="text/x-handlebars" id="harlan">
+    <div class="row-fluid">
+      <div class="span2">
+        {{partial 'harlan/harlanNav'}}
+      </div>
+      <div class="span10">
+        <p>All about Harlan!</p>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="harlan/_harlanNav">
+    <ul id="harlanNav" class="nav nav-stacked nav-pills">
+      {{#each acc in accomplishments}}
+
+        <li>{{#linkTo accomplishment acc}}{{acc.name}}{{/linkTo}}</li>
+      {{/each}}
+    </ul>
+  </script>
+
+  <script type="text/x-handlebars" id="accomplishment">
+    <p>Accomplishment {{name}}</p>
+  </script>
+
+  <script type="text/x-handlebars" id="programming">
+    <div class="row-fluid">
+      <div class="span2">
+        {{partial 'programming/programmingNav'}}
+      </div>
+      <div class="span10">
+        {{partial timeline}}
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="programming/_programmingNav">
+    <ul id="programmingNav" class="nav nav-stacked nav-pills">
+      {{#each proj in projects}}
+
+        <li>{{#linkTo project proj}}{{proj.name}}{{/linkTo}}</li>
+      {{/each}}
+    </ul>
+  </script>
+
+  <script type="text/x-handlebars" id="project">
+    <p>Project {{name}} ({{id}})</p>
+
+    <p>{{summary}}</p>
+
+    {{partial tumblr}}
+
+  </script>
+
+  <script type="text/x-handlebars" id="_tumblr">
+    {{#if posts}}
+    <h4>Blog Posts:</h4>
+    <ul>
+    {{#each p in posts}}
+      <li><div>{{{p.caption}}</div><a href="{{unbound p.post_url}}">link</a></li>
+    {{/each}}
+    </ul>
+    {{/if}}
+  </script>
+
+  <script type="text/x-handlebars" id="lean">
+    <div class="row-fluid">
+      <div class="span2">
+        {{partial 'lean/leanNav'}}
+      </div>
+      <div class="span10">
+        <p>All about Lean!</p>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="lean/_leanNav">
+    <p>JK</p>
+  </script>
+
+
+  <script type="text/x-handlebars" id="_timeline">
+    
+    <iframe src='http://embed.verite.co/timeline/?source=0AlNlwgTVXeETdHRCS18yRnRITkR3bWdjNGUxQVRYd0E&font=Bevan-PotanoSans&maptype=toner&lang=en&hash_bookmark=true&height=500' width='100%' height='500' frameborder='0'></iframe>
+
+  </script>
+
+
+  <script src="js/all.min.js"></script>
+
+
+<style type='text/css'>@import url('http://getbarometer.s3.amazonaws.com/assets/barometer/css/barometer.css');</style>
+<script src='http://getbarometer.s3.amazonaws.com/assets/barometer/javascripts/barometer.js' type='text/javascript'></script>
+<script type="text/javascript" charset="utf-8">
+  BAROMETER.load('cjBkfmfptTEMcg3pCkSHe');
+</script>
+
+
+
+
+</body>
+</html>

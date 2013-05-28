@@ -1,0 +1,21 @@
+/* Put your CSS here */
+html, body {
+/*	padding: 10px; */	
+}
+
+#siteNav .ember-view.active .icon {
+	color: blue;
+}
+
+#programmingNav li > .ember-view.active {
+	background-color: yellow;
+}
+
+
+#harlanNav li > .ember-view.active {
+	background-color: yellow;
+}
+
+#siteNav .navbar-text a {
+	color: white;
+}
