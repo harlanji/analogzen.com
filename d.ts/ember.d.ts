@@ -18,6 +18,8 @@ declare module Ember {
     export class Object extends CoreObject {
 
         static create(...arguments: any[]): Object;
+        static extend(...arguments: any[]): Object;
+        static reopenClass(...arguments: any[]): Object;
 
         addObserver(key: string, target: Object, method: any): Object;
         apply(obj: Object): Object;
@@ -118,6 +120,7 @@ declare module Ember {
         initialize(router: Router);
 
         Router: Router;
+        Store: any; // ember data
     }
 
     export class Route extends Object {
@@ -206,7 +209,6 @@ declare module Ember {
         unknownProperty(key: string): Object;
     }
 }
-
 
 interface EmberStatic {
 
@@ -314,7 +316,13 @@ interface EmberStatic {
     unwatch(obj: Object, keyName: string);
     watch(obj: Object, keyName: string);
     wrap(func: Function, superFunc: Function);
+
+
 }
 
 declare var Em: Ember;
 //declare var Ember: EmberStatic;
+
+
+
+
