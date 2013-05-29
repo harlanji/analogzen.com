@@ -17,9 +17,12 @@ declare module Ember {
 
     export class Object extends CoreObject {
 
-        static create(...arguments: any[]): Object;
-        static extend(...arguments: any[]): Object;
-        static reopenClass(...arguments: any[]): Object;
+        static create(...arguments: any[]);
+        static extend(...arguments: any[]);
+        create(...arguments: any[]);
+        extend(...arguments: any[]);
+
+        reopenClass(...arguments: any[]):Object;
 
         addObserver(key: string, target: Object, method: any): Object;
         apply(obj: Object): Object;
@@ -134,12 +137,14 @@ declare module Ember {
         replaceWith(name: string, ...obj: any);
         */
 
+        static create(...arguments: any[]);
+        static extend(...arguments: any[]);
+        
+
         model(): any;
 
         redirect(): void;
         transitionTo(name: string, ...obj: any[]): void;
-
-        static extend(...arguments: any[]): Route;
     }
 
     export class Router {

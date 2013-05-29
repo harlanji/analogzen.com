@@ -8,16 +8,19 @@ declare module DS {
     export function belongsTo(t: string, options?:any):Ember.ComputedProperty;
 
     export class Adapter extends Ember.Object {
-
+        static create(...arguments: any[]);
+        static extend(...arguments: any[]);
     }
 
     export class Store extends Ember.Object {
-    	static extend(...arguments: Object[]): Store;
+        static create(...arguments: any[]);
+        static extend(...arguments: any[]);
 
     	registerAdapter(t:string, adapter:Adapter);
     }
 
     export class Model extends Ember.Object {
-    	static extend(...arguments: Object[]): Model;
+        static create(...arguments: any[]);
+        static extend(...arguments: any[]);
     }
 }
