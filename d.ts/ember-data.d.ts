@@ -10,6 +10,8 @@ declare module DS {
     export class Adapter extends Ember.Object {
         static create(...arguments: any[]);
         static extend(...arguments: any[]);
+
+        static FIXTURES: Array;
     }
 
     export class Store extends Ember.Object {

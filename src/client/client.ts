@@ -2,7 +2,7 @@
 
 
 /// <reference path="../../d.ts/ember.d.ts" />
-
+/// <reference path="../../d.ts/ember-data.d.ts" />
 
 
 
@@ -14,39 +14,19 @@ var rot13 = function(s) {
 
 
 
-var App = Ember.Application.create({
-  title: 'Analog Zen',
-  author: {
-    name: 'Harlan Iverson',
-    // to avoid harvesters. does not stop smart harvesters that look at the DOM text.
-    email: rot13('uneyna@nanybtmra.pbz')
-  },
-  tumblr: {
-    clientKey: 'emjyTZv9qgmhaxWX884sWfkA3f4Sjy4rFHX4rfRCEkCJKbr9Zz',
-  },
-});
 
 
-App.Router.map(function() {
-  this.route('harlan');
-  this.resource('accomplishment', {path: '/accomplishment/:accomplishment_id'}, function() {
 
-  });
-  this.route('programming');
-  this.resource('project', {path: '/project/:project_id'}, function() {
 
-  });
-  this.route('lean');
-});
-
-App.IndexRoute = Ember.Route.extend({
+var IndexRoute = Ember.Route.extend({
   model: function() {
     return ['red', 'yellow', 'blue'];
   }
 });
 
 
-App.CustomRestAdapter = DS.Adapter.extend({
+
+var CustomRestAdapter = DS.Adapter.extend({
   url: "",
   data: {},
   dataType: "jsonp",
@@ -82,7 +62,7 @@ App.CustomRestAdapter = DS.Adapter.extend({
 
 
 
-App.GDataSpreadsheetAdapter = App.CustomRestAdapter.extend({
+var GDataSpreadsheetAdapter = CustomRestAdapter.extend({
   url: "https://spreadsheets.google.com/feeds/cells/0AlNlwgTVXeETdEozaVRfZ0Itb0lvanZFMUFFTkg4RGc/od6/public/basic",
   data: {alt: "json-in-script"},
   handleFindAllResponse: function(store, type) {
@@ -152,7 +132,7 @@ App.GDataSpreadsheetAdapter = App.CustomRestAdapter.extend({
 
               //console.dir(projects);
 
-              //window.App.Project.FIXTURES = projects;
+              //Project.reopen({FIXTURES: projects});
             }
           },
 
@@ -164,7 +144,7 @@ App.GDataSpreadsheetAdapter = App.CustomRestAdapter.extend({
 
 
 
-App.TumblrAdapter = App.CustomRestAdapter.extend({
+var TumblrAdapter = CustomRestAdapter.extend({
   url: "http://api.tumblr.com/v2/blog/harlanji.tumblr.com/posts",
   data: {
     api_key: "emjyTZv9qgmhaxWX884sWfkA3f4Sjy4rFHX4rfRCEkCJKbr9Zz", 
@@ -199,7 +179,9 @@ App.TumblrAdapter = App.CustomRestAdapter.extend({
 
 
 
-App.Store = DS.Store.extend({
+
+
+var Store = DS.Store.extend({
   revision: 12,
   //adapter: 'DS.RESTAdapter'
   adapter: 'DS.FixtureAdapter'
@@ -207,7 +189,7 @@ App.Store = DS.Store.extend({
 
 
 
-App.Project = DS.Model.extend({
+var Project = DS.Model.extend({
  name: DS.attr('string'),
  employer: DS.attr('string'),
  summary: DS.attr('string'),
@@ -220,17 +202,15 @@ App.Project = DS.Model.extend({
 });
 
 
-
   
-App.TumblrPost = DS.Model.extend({
+var TumblrPost = DS.Model.extend({
   post_url: DS.attr('string'),
   date: DS.attr('string'),
   caption: DS.attr('string'),
   photos: DS.attr('string'),
 });
 
-
-App.TwitterUser = DS.Model.extend({
+var TwitterUser = DS.Model.extend({
   defaultProfileImage: DS.attr('boolean'),
   description: DS.attr('string'),
   screenName: DS.attr('string'),
@@ -240,7 +220,7 @@ App.TwitterUser = DS.Model.extend({
   tweets: DS.hasMany('App.Tweet')
 });
 
-App.Tweet = DS.Model.extend({
+var Tweet = DS.Model.extend({
   coordinates: DS.attr('point'),
   createdAt: DS.attr('date'),
   isFavorited: DS.attr('boolean'),
@@ -253,19 +233,109 @@ App.Tweet = DS.Model.extend({
 });
 
 
-App.TwitterUser.sync = {
 
-};
-App.Store.registerAdapter("App.TwitterUser", DS.BasicAdapter);
-App.Store.registerAdapter("App.Tweet", DS.BasicAdapter);
+
+var Accomplishment = DS.Model.extend({
+  name: DS.attr('string'),
+});
+
+
+Accomplishment.FIXTURES = [
+{id: 1, name: 'Weight Loss'},
+{id: 2, name: 'Education'},
+{id: 3, name: 'Soashable (15 minutes of fame)'},
+{id: 4, name: 'Professional at 15'},
+];
+
+
+var ProgrammingRoute = Ember.Route.extend({
+  model: function() {
+    return {
+      projects: Project.find(),
+    }
+  },
+
+});
+
+
+var HarlanRoute = Ember.Route.extend({
+  model: function() {
+    return {
+      accomplishments: Accomplishment.find(),
+    }
+  },
+});
+
+// FIXME understand this. 
+// http://stackoverflow.com/questions/15678817/why-isnt-my-ember-js-route-model-being-called
+var ProjectRoute = Ember.Route.extend({
+  setupController: function (controller, model) {
+    var posts = TumblrPost.find();
+
+    model.set("posts", this.projectPosts(controller));
+  },
+  model: function() {
+    return {
+      posts: this.projectPosts(this.get('controller')),
+    };
+  },
+  projectPosts: function(controller) {
+    return TumblrPost.find();
+  }
+});
+
+var App = Ember.Application.create({
+  title: 'Analog Zen',
+  author: {
+    name: 'Harlan Iverson',
+    // to avoid harvesters. does not stop smart harvesters that look at the DOM text.
+    email: rot13('uneyna@nanybtmra.pbz')
+  },
+  tumblr: {
+    clientKey: 'emjyTZv9qgmhaxWX884sWfkA3f4Sjy4rFHX4rfRCEkCJKbr9Zz',
+  },
+});
+
+
+App.reopen({
+
+	// data / models
+	Store: Store,
+	Tweet: Tweet,
+	TwitterUser: TwitterUser,
+	TumblrPost: TumblrPost,
+	Project: Project,
+	Accomplishment: Accomplishment,
+
+	// routes
+	IndexRoute: IndexRoute,
+	ProgrammingRoute: ProgrammingRoute,
+	HarlanRoute: HarlanRoute,
+	ProjectRoute: ProjectRoute,
+});
+
+
+App.Router.map(function() {
+  this.route('harlan');
+  this.resource('accomplishment', {path: '/accomplishment/:accomplishment_id'}, function() {
+
+  });
+  this.route('programming');
+  this.resource('project', {path: '/project/:project_id'}, function() {
+
+  });
+  this.route('lean');
+});
+
+
 
 
 
 
 
 //App.Store.registerAdapter("App.Project", App.GDataSpreadsheetAdapter);
-App.Store.registerAdapter("App.Project", App.GDataSpreadsheetAdapter);
-App.Store.registerAdapter("App.TumblrPost", App.TumblrAdapter);
+App.Store.registerAdapter("App.Project", GDataSpreadsheetAdapter);
+App.Store.registerAdapter("App.TumblrPost", TumblrAdapter);
 
 
 /*
@@ -279,65 +349,9 @@ App.Store.registerAdapter("App.BlogPost", Ember.DS.RESTAdapter.extend({
 */
 
 
-App.Project.FIXTURES2 = [
-{id: 4, name: 'Analog Zen (portfolio)', template: '_ffff'},
-{id: 1, name: 'DJ With Spotify', template: 'programming'},
-{id: 2, name: 'Soashable', template: 'programming'},
-{id: 3, name: 'Maven JavaScript Plugin', template: 'programming'},
-
-];
 
 
 
-
-App.Accomplishment = DS.Model.extend({
-  name: DS.attr('string'),
-});
-
-App.Accomplishment.FIXTURES = [
-{id: 1, name: 'Weight Loss'},
-{id: 2, name: 'Education'},
-{id: 3, name: 'Soashable (15 minutes of fame)'},
-{id: 4, name: 'Professional at 15'},
-
-];
-
-
-App.ProgrammingRoute = Ember.Route.extend({
-  model: function() {
-    return {
-      projects: App.Project.find(),
-    }
-  },
-
-});
-
-
-App.HarlanRoute = Ember.Route.extend({
-  model: function() {
-    return {
-      accomplishments: App.Accomplishment.find(),
-    }
-  },
-});
-
-// FIXME understand this. 
-// http://stackoverflow.com/questions/15678817/why-isnt-my-ember-js-route-model-being-called
-App.ProjectRoute = Ember.Route.extend({
-  setupController: function (controller, model) {
-    var posts = App.TumblrPost.find();
-
-    model.set("posts", this.projectPosts(controller));
-  },
-  model: function() {
-    return {
-      posts: this.projectPosts(this.get('controller')),
-    };
-  },
-  projectPosts: function(controller) {
-    return App.TumblrPost.find();
-  }
-});
 
 
 

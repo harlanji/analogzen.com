@@ -15,6 +15,7 @@ JS_DEPS := 	dist/public/js/libs/jquery-1.9.1.js \
 			dist/public/js/libs/handlebars-1.0.0-rc.3.js \
 			dist/public/js/libs/bootstrap.js \
 			dist/public/js/libs/ember-latest.js \
+			dist/public/js/libs/ember-data-latest.js \
 			dist/public/js/libs/require.js \
 			#
 
