@@ -1,5 +1,6 @@
+REMOTE_SERVICE=analogzen
 SSH_CONN := analogzen@analogzen.com
-REMOTE_PATH := /home/analogzen/analogzen.com/wen
+REMOTE_PATH := /home/analogzen/analogzen.com
 
 include webawesome/vars.mk
 
