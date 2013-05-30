@@ -1,7 +1,7 @@
 SSH_CONN := analogzen@analogzen.com
-REMOTE_PATH := /home/analogzen/vapurlounge.com
+REMOTE_PATH := /home/analogzen/analogzen.com/wen
 
-include webawesome.vars.mk
+include webawesome/vars.mk
 
 ALL_ARTIFACTS := 	dist/node_modules \
 					dist/server.js \
@@ -33,4 +33,4 @@ TSD_LIBS := 	node \
 				#
 
 
-include webawesome.mk
+include webawesome/targets.mk
