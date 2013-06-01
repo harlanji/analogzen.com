@@ -32,10 +32,7 @@ JS_DEPS := 	dist/public/js/libs/jquery-1.9.1.js \
 			$(GENERATED_JS) \
 			#
 
-
-JS_DEPS := 	dist/public/js/libs/ember-data-latest.js \
-			$(GENERATED_JS) \
-			#
+			
 
 CSS_DEPS := 	dist/public/css/normalize.css \
 				dist/public/css/bootstrap.css \
