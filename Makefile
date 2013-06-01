@@ -14,12 +14,26 @@ ALL_ARTIFACTS := 	dist/public/index.html.gz \
 					# $(ALL_JS:.js=.min.js).map \
 					#
 
+
+CDN_JS_DEPS := "//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js" \
+			"//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.runtime.min.js" \
+			"//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" \
+			"//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.2/ember.min.js" \
+			"//cdnjs.cloudflare.com/ajax/libs/ember-data.js/0.8.0-latest20121123/ember-data-latest.min.js" \
+			"//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.5/require.min.js" \
+			#
+
 JS_DEPS := 	dist/public/js/libs/jquery-1.9.1.js \
 			dist/public/js/libs/handlebars-1.0.0-rc.3.js \
 			dist/public/js/libs/bootstrap.js \
 			dist/public/js/libs/ember-latest.js \
 			dist/public/js/libs/ember-data-latest.js \
 			dist/public/js/libs/require.js \
+			$(GENERATED_JS) \
+			#
+
+
+JS_DEPS := 	dist/public/js/libs/ember-data-latest.js \
 			$(GENERATED_JS) \
 			#
 
