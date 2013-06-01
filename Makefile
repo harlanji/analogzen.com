@@ -4,8 +4,11 @@ REMOTE_PATH := /home/analogzen/analogzen.com
 
 include webawesome/vars.mk
 
-ALL_ARTIFACTS := 	dist/server.js \
-					dist/public/index.html.gz \
+# override for EmberJS
+HANDLEBARS_BIN := ember-precompile
+
+
+ALL_ARTIFACTS := 	dist/public/index.html.gz \
 					$(ALL_JS:.js=.min.js).gz \
 					$(ALL_CSS:.css=.min.css).gz \
 					# $(ALL_JS:.js=.min.js).map \

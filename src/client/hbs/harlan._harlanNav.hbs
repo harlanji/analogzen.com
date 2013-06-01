@@ -1,0 +1,6 @@
+<ul id="harlanNav" class="nav nav-stacked nav-pills">
+  {{#each acc in accomplishments}}
+
+    <li>{{#linkTo accomplishment acc}}{{acc.name}}{{/linkTo}}</li>
+  {{/each}}
+</ul>
