@@ -1,0 +1,6 @@
+<ul id="programmingNav" class="nav nav-stacked nav-pills">
+  {{#each proj in projects}}
+
+    <li>{{#linkTo project proj}}{{proj.name}}{{/linkTo}}</li>
+  {{/each}}
+</ul>

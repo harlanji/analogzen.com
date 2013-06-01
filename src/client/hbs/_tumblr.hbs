@@ -1,0 +1,8 @@
+{{#if posts}}
+<h4>Blog Posts:</h4>
+<ul>
+{{#each p in posts}}
+  <li><div>{{{p.caption}}</div><a href="{{unbound p.post_url}}">link</a></li>
+{{/each}}
+</ul>
+{{/if}}
