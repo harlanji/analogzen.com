@@ -1,5 +1,5 @@
 <ul id="programmingNav" class="nav nav-stacked nav-pills">
-  {{#each proj in projects}}
+  {{#each proj in model}}
 
     <li>{{#linkTo project proj}}{{proj.name}}{{/linkTo}}</li>
   {{/each}}

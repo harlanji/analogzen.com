@@ -8,9 +8,15 @@ include webawesome/vars.mk
 HANDLEBARS_BIN := ember-precompile
 
 
-ALL_ARTIFACTS := 	dist/public/index.html.gz \
-					$(ALL_JS:.js=.min.js).gz \
-					$(ALL_CSS:.css=.min.css).gz \
+ALL_ARTIFACTS := 	dist/public/index.html \
+					$(ALL_JS:.js=.js) \
+					$(ALL_CSS:.css=.css) \
+
+					# dist/public/index.html.gz \
+					# $(ALL_JS:.js=.min.js).gz \
+					# $(ALL_CSS:.css=.min.css).gz \
+
+
 					# $(ALL_JS:.js=.min.js).map \
 					#
 

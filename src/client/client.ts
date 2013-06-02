@@ -18,159 +18,85 @@ var rot13 = function(s) {
 
 
 
-var IndexRoute = Ember.Route.extend({
-  model: function() {
-    return ['red', 'yellow', 'blue'];
-  }
-});
+var GDataRecord = Ember.Object.extend({});
 
-
-
-var CustomRestAdapter = DS.Adapter.extend({
-  url: "",
-  data: {},
-  dataType: "jsonp",
-  handleFindAllResponse: function(store, type) {
-    return function(resp) {};
-  },
-
-  findAll: function(store, type) {
-          //var url = type.url;
-          //url = url.fmt(id);
-
-          $.ajax({
-            url: this.get('url'), 
-            data: this.get('data'),
-            dataType: this.get('dataType')}
-          ).then(this.handleFindAllResponse(store, type));
-        },
-
-  find: function(store, type, id) {
-    //console.log('FIXMEEEEE find: ' + id);
-    //this.findAll(store, type);
-
-    this.findAll(store, type);
-  },
-  findMany: function() {},
-  createRecord: function() {},
-  updateRecord: function() {},
-  deleteRecord: function() {},
-});
-
-
-
-
-
-
-var GDataSpreadsheetAdapter = CustomRestAdapter.extend({
+GDataRecord.reopenClass({
   url: "https://spreadsheets.google.com/feeds/cells/0AlNlwgTVXeETdEozaVRfZ0Itb0lvanZFMUFFTkg4RGc/od6/public/basic",
   data: {alt: "json-in-script"},
-  handleFindAllResponse: function(store, type) {
-    return function(resp) {
-              //console.dir(resp);
+  dataType: "jsonp",
 
-              // this could be done from headers using some mapping function.
-              var colMap = {
-                'A' : 'id',
-                'B' : 'name',
-                'C' : 'employer',
-                'D' : 'summary', 
-                'E' : 'timespan',
-                'F' : 'skills',
-                'G' : 'media',
-                'H' : 'programming_description',
-                'I' : 'business_description',
-                'J' : 'tumblr_tag',
-              };
-              var coordExp = /^(([A-Z]+)([0-9]+))$/i;
-              var projectMap = {}, 
-                prevRow = "";
+  // this could be done from headers using some mapping function.
+  colMap: {
+      'A' : 'id',
+      'B' : 'name',
+      'C' : 'employer',
+      'D' : 'summary', 
+      'E' : 'timespan',
+      'F' : 'skills',
+      'G' : 'media',
+      'H' : 'programming_description',
+      'I' : 'business_description',
+      'J' : 'tumblr_tag',
+    },
 
-              
-              resp.feed.entry.forEach(function(cell, idx) {
-                var coords = cell.title.$t.match(coordExp);
-                var row = coords[3],
-                  col = coords[2];
+  findAll: function() {
 
-                // header
-                if(row == "1") {
-                  return;
-                }
+    var colMap = this.colMap;
 
-                // FIXME what if not text?
-                var value = cell.content.$t;
-
-                if(row != prevRow) {
-                  projectMap[row] = {};
-
-                  prevRow = row;
-                };
+    return $.ajax({
+      url: this.url, 
+      data: this.data,
+      dataType: this.dataType
+    }).then(function(resp) {
+      var coordExp = /^(([A-Z]+)([0-9]+))$/i;
+      var projectMap = {}, 
+        prevRow = "";
 
 
+      var records = [];      
+      resp.feed.entry.forEach(function(cell, idx) {
+        var coords = cell.title.$t.match(coordExp);
+        var row = coords[3],
+          col = coords[2];
 
-                if(!colMap.hasOwnProperty(col)) {
-                  return;
-                }
+        // header
+        if(row == "1") {
+          return;
+        }
 
-                var key = colMap[col];
-                projectMap[row][key] = value;
+        // FIXME what if not text?
+        var value = cell.content.$t;
 
-                // mapping
-                //switch(key) {}
+        if(row != prevRow) {
+          projectMap[row] = {};
 
-                // ghetto, fix
-                if(col == "I") {
-                  // data is a hash of key/value pairs. If your server returns a
-                  // root, simply do something like:
-                  // store.load(type, id, data.person)
-                  store.load(type, projectMap[row].id, projectMap[row]);
-                }
-
-              });
-
-              //store.didUpdateAll(type);
-
-              //console.dir(projects);
-
-              //Project.reopen({FIXTURES: projects});
-            }
-          },
-
-
-});
-
-
-
-
-
-
-var TumblrAdapter = CustomRestAdapter.extend({
-  url: "http://api.tumblr.com/v2/blog/harlanji.tumblr.com/posts",
-  data: {
-    api_key: "emjyTZv9qgmhaxWX884sWfkA3f4Sjy4rFHX4rfRCEkCJKbr9Zz", 
-    tag: "hackerfair3"
-  },
-  handleFindAllResponse: function(store, type) {
-    return function(resp) {
-      resp.response.posts.forEach(function(post, idx) {       
-        // data is a hash of key/value pairs. If your server returns a
-        // root, simply do something like:
-        // store.load(type, id, data.person)
-
-        var storePost = {
-          id: post.id,
-          post_url: post.post_url,
-          date: post.date,
-          caption: post.caption,
-          photos: post.hasOwnProperty('photos') ? post.photos.map(function(p) {
-            return p.original_size.url;
-          }) : [],
+          prevRow = row;
         };
 
-        store.load(type, post.id, storePost);
+
+
+        if(!colMap.hasOwnProperty(col)) {
+          return;
+        }
+
+        var key = colMap[col];
+        projectMap[row][key] = value;
+
+        // mapping
+        //switch(key) {}
+
+        // ghetto, fix
+        if(col == "I") {
+          // data is a hash of key/value pairs. If your server returns a
+          // root, simply do something like:
+          // store.load(type, id, data.person)
+          records.push( GDataRecord.create(projectMap[row]) );
+        }
 
       });
-    }
+
+      return records;
+    });
   },
 
 });
@@ -203,11 +129,44 @@ var Project = DS.Model.extend({
 
 
   
-var TumblrPost = DS.Model.extend({
-  post_url: DS.attr('string'),
-  date: DS.attr('string'),
-  caption: DS.attr('string'),
-  photos: DS.attr('string'),
+var TumblrPost = Ember.Object.extend({});
+
+
+TumblrPost.reopenClass({
+  url: "http://api.tumblr.com/v2/blog/harlanji.tumblr.com/posts",
+  data: {
+    api_key: "emjyTZv9qgmhaxWX884sWfkA3f4Sjy4rFHX4rfRCEkCJKbr9Zz", 
+    tag: "hackerfair3"
+  },
+
+  findAll: function() {
+    return $.ajax({
+      url: this.url, 
+      data: this.data,
+      dataType: this.dataType
+    }).then(function(resp) {
+      var posts = [];
+      resp.response.posts.forEach(function(post, idx) {       
+        // data is a hash of key/value pairs. If your server returns a
+        // root, simply do something like:
+        // store.load(type, id, data.person)
+
+        var storePost = TumblrPost.create({
+          id: post.id,
+          post_url: post.post_url,
+          date: post.date,
+          caption: post.caption,
+          photos: post.hasOwnProperty('photos') ? post.photos.map(function(p) {
+              return p.original_size.url;
+            }) : [],
+
+        });
+
+        posts.push(storePost);
+      });
+      return posts;
+    });
+  },
 });
 
 var TwitterUser = DS.Model.extend({
@@ -248,41 +207,6 @@ Accomplishment.FIXTURES = [
 ];
 
 
-var ProgrammingRoute = Ember.Route.extend({
-  model: function() {
-    return {
-      projects: Project.find(),
-    }
-  },
-
-});
-
-
-var HarlanRoute = Ember.Route.extend({
-  model: function() {
-    return {
-      accomplishments: Accomplishment.find(),
-    }
-  },
-});
-
-// FIXME understand this. 
-// http://stackoverflow.com/questions/15678817/why-isnt-my-ember-js-route-model-being-called
-var ProjectRoute = Ember.Route.extend({
-  setupController: function (controller, model) {
-    var posts = TumblrPost.find();
-
-    model.set("posts", this.projectPosts(controller));
-  },
-  model: function() {
-    return {
-      posts: this.projectPosts(this.get('controller')),
-    };
-  },
-  projectPosts: function(controller) {
-    return TumblrPost.find();
-  }
-});
 
 var App = Ember.Application.create({
   title: 'Analog Zen',
@@ -333,9 +257,6 @@ App.Router.map(function() {
 
 
 
-//App.Store.registerAdapter("App.Project", App.GDataSpreadsheetAdapter);
-App.Store.registerAdapter("App.Project", GDataSpreadsheetAdapter);
-App.Store.registerAdapter("App.TumblrPost", TumblrAdapter);
 
 
 /*
