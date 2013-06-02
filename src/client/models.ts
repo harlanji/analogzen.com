@@ -174,10 +174,4 @@ var Accomplishment = DS.Model.extend({
 });
 
 
-Accomplishment.FIXTURES = [
-{id: 'weight_loss', name: 'Weight Loss'},
-{id: 'education', name: 'Education'},
-{id: 'soashable', name: 'Soashable (15 minutes of fame)'},
-{id: 'young_pro', name: 'Professional at 15'},
-];
 

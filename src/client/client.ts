@@ -6,6 +6,7 @@
 
 
 /// <reference path="models.ts" />
+/// <reference path="fixtures.ts" />
 /// <reference path="routes.ts" />
 
 var rot13 = function(s) {
@@ -51,7 +52,6 @@ App.reopen({
 
 	// routes
 	IndexRoute: IndexRoute,
-	ProgrammingRoute: ProgrammingRoute,
 	HarlanRoute: HarlanRoute,
 	ProjectRoute: ProjectRoute,
 });
@@ -68,7 +68,9 @@ App.Router.map(function() {
   });
   this.route('programming');
   this.resource('project', {path: '/project/:project_id'}, function() {
-
+    this.route('analogzen');
+    this.route('dj_with_spotify');
+    this.route('soashable');
   });
   this.route('lean');
 });

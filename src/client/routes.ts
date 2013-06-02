@@ -7,9 +7,7 @@ var IndexRoute = Ember.Route.extend({
 });
 
 var ProgrammingRoute = Ember.Route.extend({
-  /*model: function() {
-    return GDataRecord.findAll();
-  },*/
+
 
 });
 
