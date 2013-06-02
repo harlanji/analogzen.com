@@ -5,7 +5,8 @@
 /// <reference path="../../d.ts/ember-data.d.ts" />
 
 
-
+/// <reference path="models.ts" />
+/// <reference path="routes.ts" />
 
 var rot13 = function(s) {
   // credit: http://stackoverflow.com/questions/617647/where-is-my-one-line-implementation-of-rot13-in-javascript-going-wrong
@@ -57,8 +58,12 @@ App.reopen({
 
 
 App.Router.map(function() {
-  this.route('harlan');
-  this.resource('accomplishment', {path: '/accomplishment/:accomplishment_id'}, function() {
+  this.resource('harlan', function() {
+    this.route('music');
+  });
+  
+
+  this.resource('accomplishment', {path: 'accomplishment/:accomplishment_id'}, function() {
 
   });
   this.route('programming');
