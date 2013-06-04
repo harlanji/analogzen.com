@@ -75,6 +75,7 @@ App.Router.map(function() {
     this.route('analogzen');
     this.route('dj_with_spotify');
     this.route('soashable');
+    this.route('maven_js_plugin')
   });
   this.route('lean');
 });
