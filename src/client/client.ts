@@ -54,6 +54,7 @@ App.reopen({
 	IndexRoute: IndexRoute,
 	HarlanRoute: HarlanRoute,
 	ProjectRoute: ProjectRoute,
+  ProgrammingRoute: ProgrammingRoute,
 });
 
 
@@ -66,8 +67,11 @@ App.Router.map(function() {
   this.resource('accomplishment', {path: 'accomplishment/:accomplishment_id'}, function() {
 
   });
-  this.route('programming');
-  this.resource('project', {path: '/project/:project_id'}, function() {
+  this.resource('programming', function() {
+
+
+  });
+  this.resource('project', function() {
     this.route('analogzen');
     this.route('dj_with_spotify');
     this.route('soashable');

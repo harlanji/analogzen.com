@@ -8,7 +8,7 @@ Accomplishment.FIXTURES = [
 
 
 Project.FIXTURES = [
-{id: 'analogzen', name: 'Analog Zen', summary: '1111'},
+{id: 'analogzen2', name: 'Analog Zen', summary: '1111'},
 {id: 'dj_with_spotify', name: 'DJ with Spotify', summary: '2222'},
 {id: 'soashable', name: 'Soashable', summary: '3333'},
 ];
