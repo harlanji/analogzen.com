@@ -37,6 +37,7 @@ JS_DEPS := 	dist/public/js/libs/jquery-1.9.1.js \
 			dist/public/js/libs/ember-data-latest.js \
 			dist/public/js/libs/require.js \
 			$(GENERATED_JS) \
+			dist/public/js/app.js
 			#
 
 			
