@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Analog Zen</title>
+
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+
+	<link rel="stylesheet" href="css/bootstrap-responsive.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+	<style>
+
+
+
+
+
+	</style>
+
+
+
+</head>
+<body>
+
+	<script id="application" type="text/x-handlebars">
+		<p>Hello from Ember!</p>
+
+		<div>
+			{{outlet}}
+		</div>
+	</script>
+
+	<script id="index" type="text/x-handlebars">
+		<p>Hi, I'm the Index!</p>
+
+		{{#if isExpanded}}
+			<p>And I like to talk a lot</p>
+			<button {{action collapse}}>Hide</button>
+		{{else}}
+			<button {{action  expand}}>Show More</button>
+		{{/if}}
+	</script>
+
+	<script id="index2" type="text/x-handlebars">
+		<p>Hi, I'm the Index 2! Model name: {{name}}</p>
+	</script>
+
+
+
+	<script src="js/libs/jquery-1.9.1.js"></script>
+	<script src="js/libs/handlebars-1.0.0-rc.4.js"></script>
+	<script src="js/libs/bootstrap.js"></script>
+	<script src="js/libs/ember-1.0.0-rc.5.js"></script>
+
+
+	<script>
+
+App = Ember.Application.create();
+
+
+App.Index2 = Ember.Object.extend({
+	name: null,
+});
+
+App.Index2.reopenClass({
+	findAll: function() {
+		return [this.find("findAll")];
+	},
+
+	find: function(id) {
+		return App.Index2.create({
+			id: id,
+			name: "Index2:"+id
+		});
+	}
+});
+
+App.Router.map(function() {
+	this.route('index2');
+});
+
+
+App.IndexController = Ember.Controller.extend({
+	isExapanded: false,
+
+	expand: function() {
+		this.set('isExpanded', true);
+	},
+
+	collapse: function() {
+		this.set('isExpanded', false);
+	}
+});
+
+App.Index2Route = Ember.Route.extend({
+	enter: function() {
+		this.controllerFor('index').expand();
+	},
+});
+
+
+	</script>
+</body>
+</html>

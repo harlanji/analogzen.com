@@ -1,1 +1,11 @@
-project.dj_with_spotify.hbs
+<p>I like to play [music] for friends and had just bought my first [mixer] so that I could step up my game and start using software that supports multiple decks, effects, and fine grained controls over the audio--as opposed to Spotify or iTunes which only play and queue tracks and stop there.</p>
+
+<p>The problem was that all my recent playlists were in Spotify, whose tracks live in an opaque cloud--not mp3 files like most DJ software requires. Clearly something had to be done, because I'm lazy and did not want to try to duplicate my playlists and track down all the mp3 files that would be needed.</p>
+
+<p>I knew prior that Spotify had a [API] with a piece of functionality I could work off of ([music_deliver]), so I started exploring it to see what kind of integration I could do: I could get the raw audio (PCM) data, albeit I had to figure out how to massage it into a workable format--[I did]. </p>
+
+<p>Note: The API isn't the normal REST type, but rather a library written in C that can be included in an application (they do have a REST API, but it does not offer the needed functionality).</p>
+
+<p>Next I set out to find an Open Source DJ application that I could build upon--I found Mixxx, which I had already been using, is written in C++, fairly well document, and coded cleanly enough to work off of. </p>
+
+<p>To execute the project, I created a task dependency graph with a number of technical experiments to run, starting with the most risky. I performed them in order, and each succeeded. Overall the project took about [two weeks of effort] and concluded with a presentation at [HackerFair]--a science fair where employers pay for the privilege to hire people with cool projects.</p>
