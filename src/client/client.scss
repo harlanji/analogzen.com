@@ -5,6 +5,17 @@
 }
 
 .skill {
-	background-color: aqua;
 	white-space: nowrap;
+}
+
+.skill-on {
+	background-color: aqua;
+}
+
+.nerd {
+	display: none;
+}
+
+.nerd-on {
+	display: block;
 }

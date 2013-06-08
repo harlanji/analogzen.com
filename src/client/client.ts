@@ -7,6 +7,7 @@
 
 /// <reference path="models.ts" />
 /// <reference path="fixtures.ts" />
+/// <reference path="controllers.ts" />
 /// <reference path="routes.ts" />
 
 var rot13 = function(s) {
@@ -49,6 +50,10 @@ App.reopen({
 	TumblrPost: TumblrPost,
 	Project: Project,
 	Accomplishment: Accomplishment,
+
+
+  // controllers
+  ProgrammingIndexController: ProgrammingIndexController,
 
 	// routes
 	IndexRoute: IndexRoute,

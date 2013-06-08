@@ -66,6 +66,14 @@ declare module Ember {
         $; //jQuery
     }
 
+
+    export class Controller extends Object {
+        static create(...arguments: any[]): Controller;
+        static extend(...arguments: any[]): Controller;
+
+        $; //jQuery
+    }
+
     export interface Enumerable extends Mixin {
         // Fields
         firstObject: Object;
