@@ -73,7 +73,7 @@ App.Router.map(function() {
 
   });
   this.resource('programming', function() {
-
+    this.route('resume');
 
   });
   this.resource('project', function() {
