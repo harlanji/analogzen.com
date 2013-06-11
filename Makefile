@@ -43,7 +43,7 @@ JS_DEPS := 	dist/public/js/libs/jquery-1.9.1.js \
 			
 
 CSS_DEPS := 	dist/public/css/normalize.css \
-				dist/public/css/bootstrap.css \
+				dist/public/css/bootstrap-readable.min.css \
 				dist/public/css/bootstrap-responsive.css \
 				#
 
