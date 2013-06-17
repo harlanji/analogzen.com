@@ -24,6 +24,9 @@
 	color: blue;
 }
 
+.contact-info dd li {
+	padding-left: 0px;
+}
 
 /* a little more than 480, because the second item collapses early */
 @media (max-width: 500px) {
