@@ -23,3 +23,12 @@
 #siteNav .nav a.active .icon {
 	color: blue;
 }
+
+
+/* a little more than 480, because the second item collapses early */
+@media (max-width: 500px) {
+	#siteNav .nav li {
+		width: 100%;
+
+	}
+}

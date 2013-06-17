@@ -71,6 +71,8 @@ declare module Ember {
         static create(...arguments: any[]): Controller;
         static extend(...arguments: any[]): Controller;
 
+        observes(thing: string): Controller;
+
         $; //jQuery
     }
 

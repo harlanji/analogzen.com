@@ -41,6 +41,10 @@ var App = Ember.Application.create({
 });
 
 
+
+
+  
+
 App.reopen({
 
 	// data / models
@@ -53,6 +57,7 @@ App.reopen({
 
 
   // controllers
+  ApplicationController: ApplicationController.observes('currentPath'),
   ProgrammingIndexController: ProgrammingIndexController,
 
 	// routes
