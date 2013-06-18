@@ -1,6 +1,13 @@
+var AZRoute = Ember.Route.extend({
+  enter: function() {
+    console.log("Enter route!");
 
+    var elems:any = $(".collapse");
+    elems.collapse();
+  }
+});
 
-var IndexRoute = Ember.Route.extend({
+var IndexRoute = AZRoute.extend({
   model: function() {
     return ['red', 'yellow', 'blue'];
   }
@@ -9,7 +16,7 @@ var IndexRoute = Ember.Route.extend({
 
 
 
-var HarlanRoute = Ember.Route.extend({
+var HarlanRoute = AZRoute.extend({
   model: function() {
     return {
       accomplishments: Accomplishment.find(),
@@ -18,7 +25,7 @@ var HarlanRoute = Ember.Route.extend({
 });
 
 
-var ProgrammingRoute = Ember.Route.extend({
+var ProgrammingRoute = AZRoute.extend({
   model: function () {
     return { 
       projects: Project.find(),
@@ -29,7 +36,7 @@ var ProgrammingRoute = Ember.Route.extend({
 
 // FIXME understand this. 
 // http://stackoverflow.com/questions/15678817/why-isnt-my-ember-js-route-model-being-called
-var ProjectRoute = Ember.Route.extend({
+var ProjectRoute = AZRoute.extend({
   model: function () {
     return { 
       posts: [], //Project.find(),
