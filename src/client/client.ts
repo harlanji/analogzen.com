@@ -71,6 +71,7 @@ App.reopen({
 App.Router.map(function() {
   this.resource('harlan', function() {
     this.route('music');
+    this.route('workday');
   });
   
 
